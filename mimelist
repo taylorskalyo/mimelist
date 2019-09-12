@@ -40,32 +40,6 @@ Columns:
 EOF
 }
 
-# entry_files() {
-#   local mime_target dir entry_file mime_types mime_type
-# 
-#   trap '' PIPE # stop gracefully if stdout is closed
-# 
-#   mime_target=$1
-#   for dir in "${DESKTOP_DIRS[@]}"; do
-#     if ! [[ -d ${dir} ]]; then
-#       continue
-#     fi
-# 
-#     for entry_file in "${dir}"/*.desktop; do
-#       readarray -td\; mime_types < <(entry "${entry_file}" | entry_parse 'MimeType')
-#       for mime_type in "${mime_types[@]}"; do
-#         if [[ ${mime_type} = "${mime_target}" ]]; then
-# 
-#           # Reset SIGPIPE action before calling echo. If we allow echo to
-#           # inherit our SIGPIPE trap, it will complain on broken pipes.
-#           (trap - PIPE; echo "${entry_file}")
-#           break
-#         fi
-#       done
-#     done
-#   done
-# }
-
 # List all desktop entry files that have the mime_target as a supported
 # MimeType.
 entry_files() {
@@ -102,7 +76,6 @@ format_entries() {
 
   mime_type=$1
   columns=$2
-  #wrap_columns=$(tr ',' "\n" <<<"${columns}" | grep "OnlyShowIn\|NotShowIn\|Actions\|MimeType\|Categories\|Implements\|Keywords" | paste -sd ',' -)
 
   while read -r entry_file; do
     entry=$(entry "${entry_file}")
