@@ -25,18 +25,26 @@ Options:
   -s, --set APPLICATION    Set the default application. Matches the first
                             application that starts with APPLICATION.
   -c, --columns COLUMNS    Specify columns to display. Default value is
-                            '${DEFAULT_COLUMNS}'
+                            '${DEFAULT_COLUMNS}'.
   -h, --help               Display this help and exit.
 
 Columns:
   Application    The name of the application's desktop entry file.
   Location       The desktop entry's location.
   Default        Whether the application is the default handler.
-  Flags          Condensed list of the desktop entry's boolean values. Each
-                  letter corresponds to the first letter of a boolean value
-                  (e.g. 'H' corresponds to 'Hidden'). A '*' character is used
-                  to mark an application as the default handler.
+  Flags          Condensed list of the desktop entry's boolean attributes. Each
+                  flag corresponds to the first letter of a key (e.g. 'H' means
+                  'Hidden' is true). A '*' character is used to mark an
+                  application as the default handler.
   *              Any other columns will be evaluated as desktop entry keys.
+
+Flags
+  T = Terminal
+  N = NoDisplay
+  H = Hidden
+  D = DBusActivateable
+  S = StartupNotify
+  * = Default handler for this mime type
 EOF
 }
 
