@@ -5,6 +5,13 @@
 set -eo pipefail
 
 DEFAULT_COLUMNS='Flags,Application,GenericName,Exec'
+FLAG_NAMES=(
+Terminal
+NoDisplay
+Hidden
+DBusActivateable
+StartupNotify
+)
 DESKTOP_DIRS=(
 ~/.local/share/applications/
 /usr/local/share/applications/
@@ -39,11 +46,11 @@ Columns:
   *              Any other columns will be evaluated as desktop entry keys.
 
 Flags
-  T = Terminal
-  N = NoDisplay
-  H = Hidden
-  D = DBusActivateable
-  S = StartupNotify
+$(
+  for name in "${FLAG_NAMES[@]}"; do
+    echo "  ${name:0:1} = ${name}"
+  done
+)
   * = Default handler for this mime type
 EOF
 }
@@ -124,7 +131,7 @@ is_default() {
 
 # Calculate a flag string for a desktop entry.
 entry_flags() {
-  local entry_file mime_type flags entry key
+  local entry_file mime_type flags entry name
 
   entry_file=$1
   mime_type=$2
@@ -136,9 +143,9 @@ entry_flags() {
   fi
 
   entry=$(entry "${entry_file}")
-  for key in Terminal NoDisplay Hidden DBusActivateable StartupNotify; do
-    if [[ $(entry_parse "${key}" <<<"${entry}") = true ]]; then
-      flags="${flags}${key:0:1}"
+  for name in "${FLAG_NAMES[@]}"; do
+    if [[ $(entry_parse "${name}" <<<"${entry}") = true ]]; then
+      flags="${flags}${name:0:1}"
     else
       flags="${flags}-"
     fi
