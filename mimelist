@@ -94,7 +94,7 @@ format_entries() {
           if is_default "${mime_type}" "${entry_file}"; then
             row="${row}true#"
           else
-            row="${row}false#"
+            row="${row}#"
           fi
           ;;
         Flags)
