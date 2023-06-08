@@ -63,7 +63,7 @@ entry_files() {
   mime_target=$1
 
   for dir in "${DESKTOP_DIRS[@]}"; do
-    grep -sl "MimeType\\s*=.*\\W${mime_target}[;\$]" "${dir}"/*.desktop || :
+    grep -sl "MimeType\\s*=.*\\W\?${mime_target}[;\$]" "${dir}"/*.desktop || :
   done
 }
 
